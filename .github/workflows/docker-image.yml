@@ -1,0 +1,24 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Build the Docker image
+      run: |
+        docker build . --file Dockerfile --tag my-image-name:latest
+
+    - name: Run commands in Docker container
+      run: |
+        docker run --rm my-image-name:latest /bin/sh -c "cd /hakaru && stack install && stack test"
