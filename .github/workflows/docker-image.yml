@@ -21,4 +21,4 @@ jobs:
 
     - name: Run commands in Docker container
       run: |
-        docker run --rm my-image-name:latest /bin/sh -c "cd /hakaru && stack install && stack test"
+        docker run --rm -v ${{ github.workspace }}:/hakaru -w /hakaru my-image-name:latest /bin/sh -c "stack install && stack test"
